@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "titulo": "Computador não conecta à rede Wi-Fi",
+        "descricao": "O notebook da sala de atendimento encontra a rede, mas não consegue se conectar desde o início da manhã.",
+        "solicitante": "Anika Nilles",
+        "status": "Concluído"
+    },
+    {
+        "id": 2,
+        "titulo": "Solicitação de acesso ao sistema de vendas",
+        "descricao": "Preciso consultar os pedidos do mês no sistema de vendas para preparar o relatório da equipe.",
+        "solicitante": "Geddy Lee",
+        "status": "Concluído"
+    },
+    {
+        "id": 3,
+        "titulo": "Impressora do financeiro com papel preso",
+        "descricao": "A impressora parou durante a impressão e mostra um aviso de papel preso na bandeja traseira.",
+        "solicitante": "Alex Lifeson",
+        "status": "Aberto"
+    }
+]
