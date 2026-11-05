@@ -26,5 +26,12 @@
         "descricao": "A máquina está travando em diversos momentos",
         "solicitante": "Bernardo Augusto",
         "status": "Aberto"
+    },
+    {
+        "id": 5,
+        "titulo": "Instalar editor de áudio profissional",
+        "descricao": "Configurar instrumentos musicais para serem utilizados com o editor de áudio",
+        "solicitante": "Jon Oliva",
+        "status": "Concluído"
     }
 ]
