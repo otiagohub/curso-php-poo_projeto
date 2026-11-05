@@ -19,5 +19,12 @@
         "descricao": "A impressora parou durante a impressão e mostra um aviso de papel preso na bandeja traseira.",
         "solicitante": "Alex Lifeson",
         "status": "Aberto"
+    },
+    {
+        "id": 4,
+        "titulo": "Problema com lentidão geral",
+        "descricao": "A máquina está travando em diversos momentos",
+        "solicitante": "Bernardo Augusto",
+        "status": "Aberto"
     }
 ]
