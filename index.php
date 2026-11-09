@@ -1,3 +1,34 @@
+<?php
+// Importação do autoload de recursos
+require_once __DIR__ . '/vendor/autoload.php';
+
+// Importando as classes através do namespace
+use CentralSuporte\Armazenamento\ArmazenamentoJson;
+use CentralSuporte\Chamados\StatusChamado;
+use CentralSuporte\Servicos\GerenciadorChamados;
+
+// Criando um objeto ArmazenamentoJson
+$armazenamento = new ArmazenamentoJson();
+
+// Criando um objeto GerenciadorChamados
+$gerenciador = new GerenciadorChamados($armazenamento);
+
+// Armazenará uma possível mensagem de erro
+$erro = null;
+
+// Armazenará a lista de chamados recuperada do arquivo JSON
+$chamados = [];
+
+try {
+    $chamados = $gerenciador->listar();
+} catch (Exception $excecao) {
+    $erro = $excecao->getMessage();
+}
+
+// echo "<pre>";
+// var_dump($chamados);
+// echo "</pre>";
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -28,27 +59,57 @@
             <p>Acompanhe as solicitações e consulte os detalhes de cada atendimento.</p>
         </section>
 
+
+        <?php if($erro !== null): ?>
+            <p class="mensagem erro" role="alert"> <?= $erro ?> </p>
+        <?php endif; ?>
+
+
         <section aria-labelledby="titulo-lista">
             <div class="secao-cabecalho">
                 <h3 id="titulo-lista">Solicitações</h3>
-                <span class="contador">3 chamados</span>
+                <span class="contador">
+                    <?= count($chamados) ?> <?= count($chamados) === 1 ? 'chamado' : 'chamados' ?>
+                </span>
             </div>
 
+    <?php if($erro === null): ?>
+
+        <?php if($chamados === []): ?>
+            <div class="cartao estado-vazio">
+                <h4>Nenhum chamado cadastrado</h4>
+                <p>Abra um chamado para iniciar um atendimento.</p>
+                <a href="novo-chamado.php" class="botao botao-principal">Cadastrar chamado</a>
+            </div>
+        
+        <?php else: ?>
             <div class="lista-chamados">
-                <article class="cartao item-chamado">
-                    <div class="item-conteudo">
-                        <p class="identificador">Chamado #1</p>
+                
+                <?php foreach($chamados as $chamado): ?>
+                    <article class="cartao item-chamado">
+                        <div class="item-conteudo">
+                            <p class="identificador">Chamado #<?= $chamado->getId() ?></p>
 
-                        <h4>
-                            <a href="chamado.php?id=1">Computador não liga</a>
-                        </h4>
+                            <h4>
+                                <a href="chamado.php?id=<?= $chamado->getId() ?>">
+                                    <?= escapar($chamado->getTitulo()) ?>
+                                </a>
+                            </h4>
 
-                        <p class="solicitante">Solicitante: Nome da pessoa</p>
-                    </div>
+                            <p class="solicitante">
+                                Solicitante: <?= escapar($chamado->getSolicitante()->getNome()) ?>
+                            </p>
+                        </div>
 
-                    <span class="status status-aberto">Aberto</span>
-                </article>
+                        <span class="status <?= estilizarStatus($chamado->getStatus()) ?>">
+                            <?= escapar($chamado->getStatus()->value) ?>
+                        </span>
+                    </article>
+                <?php endforeach; ?>
+
             </div>
+        <?php endif; ?>
+    <?php endif; ?>
         </section>
     </main>
 
