@@ -25,13 +25,41 @@
         "titulo": "Problema com lentidão geral",
         "descricao": "A máquina está travando em diversos momentos",
         "solicitante": "Bernardo Augusto",
-        "status": "Aberto"
+        "status": "Concluído"
     },
     {
         "id": 5,
         "titulo": "Instalar editor de áudio profissional",
         "descricao": "Configurar instrumentos musicais para serem utilizados com o editor de áudio. \n Etc e tal e mais detalhes foram dados. \n\n E mais detalhes foram digitados.",
         "solicitante": "Jon Oliva",
+        "status": "Concluído"
+    },
+    {
+        "id": 6,
+        "titulo": "Auxílio na configuração da mesa de som",
+        "descricao": "Olá!\r\nPreciso de ajuda nos processos e configuração antes de começar a gravar meu disco.\r\nDesde já agradeço!",
+        "solicitante": "Ozzy Osbourne",
+        "status": "Aberto"
+    },
+    {
+        "id": 7,
+        "titulo": "Meu novo lançamento não aparece no site",
+        "descricao": "Gostaria que meu novo trabalho chamado From The Dark aparecesse no site.\r\nFavor verificar.",
+        "solicitante": "Tony Iommi",
+        "status": "Concluído"
+    },
+    {
+        "id": 8,
+        "titulo": "Meu teclado não funciona",
+        "descricao": "Boa noite!\r\nHá teclas que não funcionam em meu teclado.\r\n\r\nFavor verificar.",
+        "solicitante": "David Gilmour",
+        "status": "Concluído"
+    },
+    {
+        "id": 9,
+        "titulo": "Minha bateria está desafinada",
+        "descricao": "Solicito presença do técnico de bateria para afinação urgente.",
+        "solicitante": "Nick Mason",
         "status": "Concluído"
     }
 ]

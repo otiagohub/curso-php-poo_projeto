@@ -64,6 +64,14 @@ try {
             <p class="mensagem erro" role="alert"> <?= $erro ?> </p>
         <?php endif; ?>
 
+        <!-- Verificamos se o parâmetro existe e se o valor dele
+         é 1. -->
+        <?php if(isset($_GET['sucesso']) && $_GET['sucesso'] === '1'): ?>
+            <p class="mensagem sucesso" role="status">
+                Chamado cadastrado com sucesso.
+            </p>
+        <?php endif; ?>
+
 
         <section aria-labelledby="titulo-lista">
             <div class="secao-cabecalho">

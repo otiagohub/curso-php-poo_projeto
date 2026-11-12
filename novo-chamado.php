@@ -1,3 +1,46 @@
+<?php
+use CentralSuporte\Armazenamento\ArmazenamentoJson;
+use CentralSuporte\Servicos\GerenciadorChamados;
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+$armazenamento = new ArmazenamentoJson();
+$gerenciador = new GerenciadorChamados($armazenamento);
+
+$erro = null;
+$nome = '';
+$titulo = '';
+$descricao = '';
+
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    /* O operador ?? (coalescência nula) fornece uma string vazia caso
+    nenhum valor tenha sido enviado/digitado. Usamos isso para evitar
+    avisos de índice indefinido. */
+    $nomeRecebido = $_POST['nome'] ?? '';
+    $tituloRecebido = $_POST['titulo'] ?? '';
+    $descricaoRecebida = $_POST['descricao'] ?? '';
+
+    // Remoção de espaços desnecessários
+    $nome = trim($nomeRecebido);
+    $titulo = trim($tituloRecebido);
+    $descricao = trim($descricaoRecebida);
+
+    // Validação BACK-END dos campos obrigatórios
+    if($nome === '' || $titulo === '' || $descricao === ''){
+        $erro = "Preencha o nome do solicitante, o título e a descrição";
+    } else {
+        try {
+            $gerenciador->criar($nome, $titulo, $descricao);
+
+            // O parâmetro sucesso=1 indica que o cadastro foi realizado com sucesso
+            header("location:index.php?sucesso=1");
+            exit;
+        } catch (Exception $excecao) {
+            $erro = $excecao->getMessage();
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -30,20 +73,26 @@
             <p>Conte para a equipe de suporte o que precisa de ajuda.</p>
         </section>
 
+        <?php if($erro !== null): ?>
+            <p class="mensagem erro" role="alert">
+                <?= escapar($erro) ?>
+            </p>
+        <?php endif; ?>
+
         <form class="cartao formulario" method="post" action="novo-chamado.php">
             <div class="campo">
                 <label for="nome">Nome do solicitante</label>
-                <input id="nome" name="nome" type="text" autocomplete="name">
+                <input value="<?= escapar($nome) ?>" id="nome" name="nome" type="text" autocomplete="name" required>
             </div>
 
             <div class="campo">
                 <label for="titulo">Título</label>
-                <input id="titulo" name="titulo" type="text">
+                <input value="<?= escapar($titulo) ?>" id="titulo" name="titulo" type="text" required>
             </div>
 
             <div class="campo">
                 <label for="descricao">Descrição</label>
-                <textarea id="descricao" name="descricao" rows="6" aria-describedby="ajuda-descricao"></textarea>
+                <textarea required id="descricao" name="descricao" rows="6" aria-describedby="ajuda-descricao"><?= escapar($descricao) ?></textarea>
                 <span class="ajuda" id="ajuda-descricao">Descreva o que aconteceu e quando o problema começou.</span>
             </div>
 

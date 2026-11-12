@@ -31,6 +31,17 @@ if(!is_string($idInformado) || !ctype_digit($idInformado) || (int) $idInformado 
     // Se o identificador for válido, garantimos e guardamos como inteiro
     $id = (int) $idInformado;
 
+    if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        try {
+            $gerenciador->concluir($id);
+            header("location:chamado.php?id=".$id."&concluido=1");
+            exit;
+        } catch (Exception $excecao) {
+            $erro = $excecao->getMessage();
+        }
+    }
+
+
     // Busca do chamado pelo id
     try {
         // Em caso de sucesso, recebendo o objeto com os dados do chamado
@@ -67,6 +78,14 @@ if(!is_string($idInformado) || !ctype_digit($idInformado) || (int) $idInformado 
 
     <main class="largura conteudo conteudo-formulario">
         <a class="voltar" href="index.php">← Voltar para chamados</a>
+
+    <?php 
+if(isset($_GET['concluido']) && $_GET['concluido'] === '1' && $erro === null): 
+    ?>
+        <p class="mensagem sucesso" role="status">
+            Chamado concluído com sucesso.
+        </p>
+    <?php endif; ?>
 
     <?php if($erro !== null): ?>
         <div class="cartao estado-vazio">
@@ -105,9 +124,13 @@ if(!is_string($idInformado) || !ctype_digit($idInformado) || (int) $idInformado 
                 </div>
             </dl>
 
-            <form method="post" action="chamado.php?id=1" class="acoes">
+        <!-- Se o status do chamado em exibição for ABERTO -->
+        <?php if($chamado->getStatus() === StatusChamado::ABERTO): ?>
+            <form method="post" action="chamado.php?id=<?= $chamado->getId() ?>" class="acoes">
                 <button class="botao botao-principal" type="submit">Concluir chamado</button>
             </form>
+        <?php endif; ?>
+
         </article>
     <?php endif; ?>
     </main>
